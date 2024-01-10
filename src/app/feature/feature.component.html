@@ -1,0 +1,48 @@
+<p-table [value]="products" [columns]="cols" responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{ col.header }}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-rowData let-columns="columns">
+        <tr>
+            <ng-container *ngFor="let col of columns; let last = last">
+                <td *ngIf="!last">
+                    {{ rowData[col.field] }}
+                </td>
+            </ng-container>
+            <td>
+                <span class="p-buttonset">
+                    <p-button icon="pi pi-pencil" severity="success"></p-button>
+                    <p-button icon="pi pi-trash" severity="danger"></p-button>
+                </span>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-button (click)="showFeatureDialoge()" icon="pi pi-external-link" label="Add New"></p-button>
+<p-dialog header="Add Feature" [(visible)]="visible" [style]="{width: '50vw'}">
+      <div class="grid">
+        <div class="col">
+            <form [formGroup]="featureForm" (ngSubmit)="submitFeature()">
+               <div> <input id="customerId" type="text" pInputText formControlName="customerId" placeholder="customerId">
+                  <div formArrayName="features">
+                    <div *ngFor="let feature of features?.controls; let i = index" [formGroupName]="i">
+                        <input id="username" type="text" pInputText formControlName="displayName" placeholder="Feature Name">
+                        <p-button icon="pi pi-trash" severity="danger" type="button" (click)="removefeatureField(i)"></p-button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                    <span class="p-buttonset">
+                        <p-button type="button" (click)="addfeatureField()">Add New Name</p-button>
+                        <p-button type="submit" severity="success" label="save"></p-button>
+                        </span>
+                </div>
+              </form>
+        </div>
+    </div>
+</p-dialog>

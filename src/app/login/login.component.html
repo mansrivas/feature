@@ -1,0 +1,21 @@
+<div class="login-container">
+    <p-panel header="Login">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="p-field">
+          <label for="username">Username</label>
+          <input id="username" type="text" pInputText formControlName="username">
+          <div *ngIf="loginForm.get('username')?.hasError('required')" class="p-error">
+            Username is required.
+          </div>
+        </div>
+        <div class="p-field">
+          <label for="password">Password</label>
+          <input id="password" type="password" pPassword formControlName="password">
+          <div *ngIf="loginForm.get('password')?.hasError('required')" class="p-error">
+            Password is required.
+          </div>
+        </div>
+        <p-button type="submit" label="Login" [disabled]="!loginForm.valid"></p-button>
+      </form>
+    </p-panel>
+  </div>
